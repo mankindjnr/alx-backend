@@ -22,7 +22,7 @@ class Config(object):
 @app.route('/')
 def index():
     """Display Hello HBNB!"""
-    return render_template('1-index.html')
+    return render_template('3-index.html')
 
 
 @babel.localeselector
