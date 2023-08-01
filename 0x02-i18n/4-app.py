@@ -7,7 +7,6 @@ i18n tasks with flask and python
 
 
 app = Flask(__name__)
-babel = Babel(app)
 
 
 class Config(object):
@@ -18,6 +17,7 @@ class Config(object):
 
 
 app.config.from_object(Config)
+babel = Babel(app)
 
 
 @babel.localeselector
