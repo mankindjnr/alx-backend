@@ -49,14 +49,16 @@ def get_locale():
     # 4. Default locale
     return app.config['BABEL_DEFAULT_LOCALE']
 
+
 def get_user_preferred_locale():
-    """Function to get the user's preferred locale from user settings or any other source"""
-    user_locale = 'en'  # Replace 'en' with the user's preferred locale obtained from user settings.
+    """get the user's preferred locale from user settings"""
+    user_locale = 'en'
     return user_locale
 
+
 def get_locale_from_request_header():
-    """Function to get the locale from the request header (e.g., 'Accept-Language' header)"""
-    header_locale = 'en'  # Replace 'en' with the locale extracted from the request header.
+    """Function to get the locale from the request header"""
+    header_locale = 'en'
     return header_locale
 
 
