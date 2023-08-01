@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 from flask import Flask, render_template, request, redirect, url_for, g
 from flask_babel import Babel, _
+import pytz
+from babel import dates
 """
 i18n tasks with flask and python
 """
@@ -26,6 +28,39 @@ users = {
     3: {"name": "Spock", "locale": "kg", "timezone": "Vulcan"},
     4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
 }
+
+
+@babel.timezoneselector
+def get_timezone():
+    """Get user's preferred time zone"""
+    # 1. Find timezone parameter in URL parameters
+    timezone = request.args.get('timezone')
+    if timezone:
+        try:
+            # Validate the provided timezone using pytz.timezone
+            pytz.timezone(timezone)
+            return timezone
+        except pytz.exceptions.UnknownTimeZoneError:
+            pass
+
+    # 2. Find time zone from user settings (if available)
+    user_timezone = get_user_preferred_timezone()
+    if user_timezone:
+        try:
+            # Validate the user's preferred timezone using pytz.timezone
+            pytz.timezone(user_timezone)
+            return user_timezone
+        except pytz.exceptions.UnknownTimeZoneError:
+            pass
+
+    # 3. Default to UTC (if no valid timezone found)
+    return 'UTC'
+
+
+def get_user_preferred_timezone():
+    """user's preferred timezone from user settings"""
+    user_timezone = 'America/New_York'
+    return user_timezone
 
 
 @babel.localeselector
@@ -81,7 +116,7 @@ def index():
     """Display Hello HBNB!"""
     u_id = request.args.get('login_as')
     user = get_user(u_id)
-    return render_template('6-index.html', user=user)
+    return render_template('7-index.html', user=user)
 
 
 if __name__ == '__main__':
